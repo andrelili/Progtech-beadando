@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.sorozatok.LoginController"
+            prefHeight="400.0" prefWidth="600.0" >
+    <VBox spacing="10" layoutX="200" layoutY="100">
+            <children>
+                <Label text="Felhasználónév:"></Label>
+                <TextField fx:id="usernameField" ></TextField>
+
+                <Label text="Jelszó:"></Label>
+                <PasswordField fx:id="passwordField"></PasswordField>
+
+                <Button text="Bejelentkezés" onAction="#onLogin"></Button>
+                <Button text="Regisztráció" onAction="#onRegister"></Button>
+            </children>
+    </VBox>
+</AnchorPane>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.sorozatok.MainController"
+            prefHeight="400.0" prefWidth="600.0">
+        <top>
+            <ToolBar>
+                <Button text="Hozzáadás " onAction="#onAdd"></Button>
+                <Button text="Szerkesztés" onAction="#onEdit"></Button>
+                <Button text="Törlés" onAction="#onDelete"></Button>
+                <TextField fx:id="filterField" promptText="Szűrés cím szerint"></TextField>
+                <Button text="Szűrés" onAction="#onFilter"></Button>
+            </ToolBar>
+        </top>
+    <center>
+        <TableView fx:id="movieTable">
+            <columns>
+                <TableColumn fx:id="titleColumn" text="Cím" prefWidth="200"></TableColumn>
+                <TableColumn fx:id="yearColumn" text="Év" prefWidth="100"></TableColumn>
+                <TableColumn fx:id="genreColumn" text="Műfaj" prefWidth="150"></TableColumn>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>
