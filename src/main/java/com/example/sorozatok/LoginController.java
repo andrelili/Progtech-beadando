@@ -24,12 +24,17 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if(userService.login(username,password)){
-            System.out.println("Sikeres bejelentkezés!");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/sorozatok/main-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Főoldal");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); // ← ez megmutatja, mi a hiba
         }
-        else{
-            System.out.println("Hibás felhasználónév vagy jelszó.");
-        }
+
     }
     @FXML
     private void onRegister(){

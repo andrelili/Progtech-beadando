@@ -32,4 +32,8 @@ public class UserService {
             throw new RuntimeException("Hashing error", e);
         }
     }
+    public UserService(){
+        register("admin","1234");
+        register("teszt","jelszo");
+    }
 }
