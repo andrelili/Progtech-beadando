@@ -1,14 +1,23 @@
 package com.example.sorozatok.service;
 
 import com.example.sorozatok.model.User;
+import com.example.sorozatok.repository.UserRepository;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
 public class UserService {
     private final Map<String, User> users = new HashMap<>();
+    private UserRepository repo;
+
+    public UserService(UserRepository repo) {
+        this.repo = repo;
+    }
+
     public boolean register(String username, String password){
         if(users.containsKey(username)) return false;
         String hash = hashPassword(password);
