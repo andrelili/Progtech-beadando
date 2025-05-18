@@ -115,7 +115,7 @@ public class MainController {
         }
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("movie-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("movie-form.fxml"));
             Scene scene = new Scene(loader.load());
 
             MovieFormController controller = loader.getController();
