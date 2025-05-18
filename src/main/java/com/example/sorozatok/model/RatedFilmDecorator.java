@@ -26,6 +26,9 @@ public class RatedFilmDecorator implements FilmComponent{
     }
 
     @Override
+    public Genre getGenre() {return baseFilm.getGenre();}
+
+    @Override
     public double getAverageRating() {
         return baseFilm.getAverageRating();
     }

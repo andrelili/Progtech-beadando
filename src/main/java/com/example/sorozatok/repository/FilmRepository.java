@@ -1,6 +1,7 @@
 package com.example.sorozatok.repository;
 import com.example.sorozatok.database.DatabaseManager;
 import com.example.sorozatok.model.Film;
+import com.example.sorozatok.model.Genre;
 import com.example.sorozatok.model.Status;
 
 import java.sql.*;
@@ -10,13 +11,15 @@ import java.util.Optional;
 
 public class FilmRepository {
     public void save(Film film) throws SQLException {
-        String sql = "INSERT INTO films (title, status, average_rating, rating_count) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO films (title, status, genre, average_rating, rating_count, year) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, film.getTitle());
             stmt.setString(2, film.getStatus().name());
-            stmt.setDouble(3, film.getAverageRating());
-            stmt.setInt(4, film.getRatingCount());
+            stmt.setString(3, film.getGenre().name());
+            stmt.setDouble(4, film.getAverageRating());
+            stmt.setInt(5, film.getRatingCount());
+            stmt.setInt(6, film.getYear());
             stmt.executeUpdate();
 
             ResultSet generatedKeys = stmt.getGeneratedKeys();
@@ -57,21 +60,24 @@ public class FilmRepository {
                 rs.getInt("id"),
                 rs.getString("title"),
                 Status.valueOf(rs.getString("status")),
+                Genre.valueOf(rs.getString("genre")),
                 rs.getDouble("average_rating"),
                 rs.getInt("rating_count"),
-                rs.getInt("year") // <-- EZ HIÁNYZOTT
+                rs.getInt("year")
         );
     }
 
     public void update(Film film){
-        String sql = "UPDATE films SET title = ?, status = ?, average_rating = ?, rating_count = ? WHERE id = ?";
+        String sql = "UPDATE films SET title = ?, status = ?, genre = ?, average_rating = ?, rating_count = ?, year = ? WHERE id = ?";
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, film.getTitle());
             stmt.setString(2, film.getStatus().toString());
-            stmt.setDouble(3, film.getAverageRating());
-            stmt.setInt(4, film.getRatingCount());
-            stmt.setInt(5, film.getId());
+            stmt.setString(3, film.getGenre().toString());
+            stmt.setDouble(4, film.getAverageRating());
+            stmt.setInt(5, film.getRatingCount());
+            stmt.setInt(6, film.getYear());
+            stmt.setInt(7, film.getId());
             stmt.executeUpdate();
         }catch (SQLException e) {
             e.printStackTrace();
