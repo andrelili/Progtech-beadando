@@ -11,6 +11,8 @@
             prefHeight="400.0" prefWidth="600.0" >
     <VBox spacing="10" layoutX="200" layoutY="100">
             <children>
+            <Label text="Üdvözlünk a Filmértékelőben!"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold;" />
                 <Label text="Felhasználónév:"></Label>
                 <TextField fx:id="usernameField" ></TextField>
 
