@@ -2,6 +2,9 @@ package com.example.sorozatok;
 
 import com.example.sorozatok.model.Film;
 import com.example.sorozatok.model.Status;
+import com.example.sorozatok.model.Genre;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import com.example.sorozatok.repository.FilmRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +25,14 @@ public class MainController {
     @FXML
     private TableColumn<Film, String> titleColumn;
     @FXML
-    private TableColumn<Film, Status> genreColumn;
+    private TableColumn<Film, Integer> yearColumn;
+    @FXML
+    private TableColumn<Film, Genre> genreColumn;
+    @FXML
+    private TableColumn<Film, Double> ratingColumn;
+    @FXML
+    private TableColumn<Film, Status> statusColumn;
+
     @FXML
     private TextField filterField;
 
@@ -40,7 +50,10 @@ public class MainController {
         instance = this;
 
         titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
-        genreColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+        yearColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getYear()).asObject());
+        genreColumn.setCellValueFactory(cellData -> cellData.getValue().genreProperty());
+        ratingColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getAverageRating()).asObject());
+        statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
 
         movieTable.setItems(movieList);
         loadFilmsFromDatabase();
