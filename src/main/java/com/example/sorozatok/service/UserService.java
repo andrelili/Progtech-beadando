@@ -7,42 +7,41 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Optional;
 
 
 public class UserService {
-    private final Map<String, User> users = new HashMap<>();
-    private UserRepository repo;
+    private final UserRepository repo;
 
     public UserService(UserRepository repo) {
         this.repo = repo;
     }
 
     public boolean register(String username, String password){
-        if(users.containsKey(username)) return false;
+        // Ha már van ilyen nevű felhasználó, ne engedjük
+        if (repo.findByUsername(username).isPresent()) {
+            return false;
+        }
         String hash = hashPassword(password);
-        users.put(username,new User(username,hash));
-        return true;
+        return repo.save(new User(username, hash));
     }
 
     public boolean login(String username, String password){
-        User user = users.get(username);
-        if(user == null) return false;
-        return user.getPasswordHash().equals(hashPassword(password));
+        Optional<User> userOpt = repo.findByUsername(username);
+        if (userOpt.isEmpty()) return false;
+        String hash = hashPassword(password);
+        return userOpt.get().getPasswordHash().equals(hash);
     }
+
     private String hashPassword(String password){
-        try{
+        try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes= digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            byte[] hashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));
             StringBuilder sb = new StringBuilder();
-            for(byte b : hashBytes) sb.append(String.format("%02x",b));
+            for (byte b : hashBytes) sb.append(String.format("%02x", b));
             return sb.toString();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Hashing error", e);
         }
-    }
-    public UserService(){
-        register("admin","1234");
-        register("teszt","jelszo");
     }
 }
