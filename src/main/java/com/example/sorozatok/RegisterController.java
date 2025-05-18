@@ -2,6 +2,7 @@ package com.example.sorozatok;
 
 import com.example.sorozatok.model.User;
 import com.example.sorozatok.service.UserService;
+import com.example.sorozatok.repository.UserRepository;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +21,7 @@ public class RegisterController {
     @FXML
     private PasswordField passwordField;
 
-    private final UserService userService = new UserService();
+    private final UserService userService = new UserService(new UserRepository());
     @FXML
     private void onRegister(){
         String username = usernameField.getText();
