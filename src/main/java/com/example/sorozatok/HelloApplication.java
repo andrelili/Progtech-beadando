@@ -22,20 +22,6 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        //Adatbázis tesztelése:
-        //try {
-        //    FilmRepository repo   = new FilmRepository();
-
-        //    Film film = new Film(0, "The Matrix", Status.WATCHED, 4.7, 150);
-        //    repo.save(film);
-
-        //     System.out.println("Mentve film id: " + film.getId());
-
-        //     repo.findAll().forEach(f -> System.out.println(f.getTitle()));
-
-        // } catch (SQLException e) {
-        //     e.printStackTrace();
-        // }
         launch(args);
     }
 }
