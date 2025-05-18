@@ -12,6 +12,7 @@ module com.example.sorozatok {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires java.desktop;
+    requires org.junit.jupiter.api;
 
     opens com.example.sorozatok to javafx.fxml;
     exports com.example.sorozatok;
