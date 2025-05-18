@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
@@ -116,8 +117,8 @@ public class MainController {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("movie-form.fxml"));
-            Scene scene = new Scene(loader.load());
-
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 1024, 800);
             MovieFormController controller = loader.getController();
             controller.setMovie(selectedFilm);
 

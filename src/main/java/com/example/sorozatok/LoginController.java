@@ -32,7 +32,8 @@ public class LoginController {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/sorozatok/main-view.fxml"));
                 Parent root = fxmlLoader.load();
                 Stage stage = (Stage) usernameField.getScene().getWindow();
-                stage.setScene(new Scene(root));
+                Scene scene = new Scene(root, 1024, 800);
+                stage.setScene(scene);
                 stage.setTitle("Főoldal");
                 stage.show();
             } catch (IOException e) {
@@ -49,15 +50,17 @@ public class LoginController {
 
     @FXML
     private void onRegister(){
-       try{
-           FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(("register-view.fxml")));
-           Parent root = fxmlLoader.load();
-           Stage stage = (Stage) usernameField.getScene().getWindow();
-           stage.setScene(new Scene(root));
-           stage.setTitle("Regisztráció");
-           stage.show();
-       }catch(IOException e){
-           e.printStackTrace();
-       }
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("register-view.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            Scene scene = new Scene(root, 1024, 800); // csak egyszer hozzuk létre
+            stage.setScene(scene);
+            stage.setTitle("Regisztráció");
+            stage.show();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
     }
+
 }

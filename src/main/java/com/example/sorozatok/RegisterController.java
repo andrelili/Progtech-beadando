@@ -28,6 +28,8 @@ public class RegisterController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+
+
         if (username.isEmpty() || password.isEmpty()) {
             showAlert("Minden mezőt ki kell tölteni!");
             return;
@@ -55,15 +57,17 @@ public class RegisterController {
 
     @FXML
     private void onBack(){
-        try{
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login-view.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = (Stage) usernameField.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root, 1024, 800);
+            stage.setScene(scene);
             stage.setTitle("Bejelentkezés");
             stage.show();
-        }catch(IOException e){
+        } catch(IOException e){
             e.printStackTrace();
         }
     }
+
 }
