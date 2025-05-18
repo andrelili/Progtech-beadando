@@ -1,6 +1,7 @@
 package com.example.sorozatok;
 
 import com.example.sorozatok.model.Film;
+import com.example.sorozatok.model.Genre;
 import com.example.sorozatok.model.Status;
 import com.example.sorozatok.repository.FilmRepository;
 import javafx.collections.FXCollections;
@@ -19,24 +20,29 @@ public class MovieFormController {
     private TextField yearField;
 
     @FXML
-    private ComboBox<Status> genreComboBox;
+    private ComboBox<Status> statusComboBox;
+
+    @FXML
+    private ComboBox<Genre> genreComboBox;
 
     private Film filmToEdit;
     private boolean isEditMode = false;
 
     @FXML
     public void initialize() {
-        genreComboBox.setItems(FXCollections.observableArrayList(Status.values()));
-
+        statusComboBox.setItems(FXCollections.observableArrayList(Status.values()));
+        genreComboBox.setItems(FXCollections.observableArrayList(Genre.values()));
     }
 
     public void setMovie(Film film) {
         this.filmToEdit = film;
         this.isEditMode = true;
-        yearField.setText(String.valueOf(film.getYear()));
+
         titleField.setText(film.getTitle());
         ratingField.setText(String.valueOf(film.getAverageRating()));
-        genreComboBox.setValue(film.getStatus());
+        yearField.setText(String.valueOf(film.getYear()));
+        statusComboBox.setValue(film.getStatus());
+        genreComboBox.setValue(film.getGenre());
     }
 
 
@@ -45,9 +51,10 @@ public class MovieFormController {
         String title = titleField.getText();
         String ratingText = ratingField.getText();
         String yearText = yearField.getText();
-        Status status = genreComboBox.getValue();
+        Status status = statusComboBox.getValue();
+        Genre genre = genreComboBox.getValue();
 
-        if (title.isEmpty() || ratingText.isEmpty() || yearText.isEmpty() || status == null) {
+        if (title.isEmpty() || ratingText.isEmpty() || yearText.isEmpty() || status == null || genre == null) {
             showAlert("Minden mező kitöltése kötelező!");
             return;
         }
@@ -74,11 +81,12 @@ public class MovieFormController {
             if (isEditMode) {
                 filmToEdit.setTitle(title);
                 filmToEdit.setStatus(status);
+                filmToEdit.setGenre(genre);
                 filmToEdit.setAverageRating(rating);
                 filmToEdit.setYear(year);
                 repo.update(filmToEdit);
             } else {
-                Film newFilm = new Film(title, status, rating, 1, year);
+                Film newFilm = new Film(title, status, genre, rating, 1, year);
                 repo.save(newFilm);
                 MainController.addMovie(newFilm);
             }
