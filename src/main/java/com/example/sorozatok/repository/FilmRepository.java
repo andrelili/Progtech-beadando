@@ -58,7 +58,8 @@ public class FilmRepository {
                 rs.getString("title"),
                 Status.valueOf(rs.getString("status")),
                 rs.getDouble("average_rating"),
-                rs.getInt("rating_count")
+                rs.getInt("rating_count"),
+                rs.getInt("year") // <-- EZ HIÁNYZOTT
         );
     }
 

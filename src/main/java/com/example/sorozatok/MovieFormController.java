@@ -14,6 +14,10 @@ public class MovieFormController {
     private TextField titleField;
     @FXML
     private TextField ratingField;
+
+    @FXML
+    private TextField yearField;
+
     @FXML
     private ComboBox<Status> genreComboBox;
 
@@ -29,30 +33,38 @@ public class MovieFormController {
     public void setMovie(Film film) {
         this.filmToEdit = film;
         this.isEditMode = true;
-
+        yearField.setText(String.valueOf(film.getYear()));
         titleField.setText(film.getTitle());
         ratingField.setText(String.valueOf(film.getAverageRating()));
         genreComboBox.setValue(film.getStatus());
     }
 
+
     @FXML
     private void onSave() {
         String title = titleField.getText();
         String ratingText = ratingField.getText();
+        String yearText = yearField.getText();
         Status status = genreComboBox.getValue();
 
-
-
-        if (title.isEmpty() || ratingText.isEmpty() || status == null) {
+        if (title.isEmpty() || ratingText.isEmpty() || yearText.isEmpty() || status == null) {
             showAlert("Minden mező kitöltése kötelező!");
             return;
         }
 
         double rating;
+        int year;
         try {
             rating = Double.parseDouble(ratingText);
         } catch (NumberFormatException e) {
             showAlert("Az értékelésnek számnak kell lennie!");
+            return;
+        }
+
+        try {
+            year = Integer.parseInt(yearText);
+        } catch (NumberFormatException e) {
+            showAlert("Az évnek számnak kell lennie!");
             return;
         }
 
@@ -63,9 +75,10 @@ public class MovieFormController {
                 filmToEdit.setTitle(title);
                 filmToEdit.setStatus(status);
                 filmToEdit.setAverageRating(rating);
+                filmToEdit.setYear(year);
                 repo.update(filmToEdit);
             } else {
-                Film newFilm = new Film(title, status, rating, 1);
+                Film newFilm = new Film(title, status, rating, 1, year);
                 repo.save(newFilm);
                 MainController.addMovie(newFilm);
             }
@@ -76,6 +89,7 @@ public class MovieFormController {
             showAlert("Hiba történt mentés közben.");
         }
     }
+
 
     @FXML
     private void onCancel() {

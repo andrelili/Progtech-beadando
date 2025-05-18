@@ -16,6 +16,9 @@
             <Label text="Év:"/>
             <TextField fx:id="yearField" prefWidth="300"/>
 
+            <Label text="Értékelés:"/>
+            <TextField fx:id="ratingField" prefWidth="300"/>
+
             <Label text="Műfaj:"/>
             <ComboBox fx:id="genreComboBox" prefWidth="300"/>
 
