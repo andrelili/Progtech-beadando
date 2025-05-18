@@ -1,6 +1,6 @@
 package com.example.sorozatok.model;
 
-public class Film {
+public class Film implements FilmComponent{
     private int id;
     private String title;
     private Status status;
@@ -15,6 +15,7 @@ public class Film {
         this.ratingCount = ratingCount;
     }
 
+    @Override
     public int getId() {
         return id;
     }
@@ -22,6 +23,7 @@ public class Film {
         this.id = id;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
@@ -29,6 +31,7 @@ public class Film {
         this.title = title;
     }
 
+    @Override
     public Status getStatus() {
         return status;
     }
@@ -36,6 +39,7 @@ public class Film {
         this.status = status;
     }
 
+    @Override
     public double getAverageRating() {
         return averageRating;
     }
@@ -43,6 +47,7 @@ public class Film {
         this.averageRating = averageRating;
     }
 
+    @Override
     public int getRatingCount() {
         return ratingCount;
     }

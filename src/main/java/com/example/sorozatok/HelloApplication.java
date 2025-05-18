@@ -1,11 +1,15 @@
 package com.example.sorozatok;
 
+import com.example.sorozatok.model.Film;
+import com.example.sorozatok.model.Status;
+import com.example.sorozatok.repository.FilmRepository;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class HelloApplication extends Application {
     @Override
@@ -18,6 +22,20 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        //Adatbázis tesztelése:
+        //try {
+        //    FilmRepository repo = new FilmRepository();
+
+        //    Film film = new Film(0, "The Matrix", Status.WATCHED, 4.7, 150);
+        //    repo.save(film);
+
+        //     System.out.println("Mentve film id: " + film.getId());
+
+        //     repo.findAll().forEach(f -> System.out.println(f.getTitle()));
+
+        // } catch (SQLException e) {
+        //     e.printStackTrace();
+        // }
+        launch(args);
     }
 }
