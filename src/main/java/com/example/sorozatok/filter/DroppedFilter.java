@@ -10,7 +10,7 @@ public class DroppedFilter implements FilmFilterStrategy {
     @Override
     public List<Film> filter(List<Film> films) {
         return films.stream()
-                .filter(film -> film.getStatus() == Status.DROPPED)
+                .filter(film -> film.getStatus().equals(Status.DROPPED.name()))
                 .collect(Collectors.toList());
     }
 }

@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -21,18 +22,37 @@ public class RegisterController {
     @FXML
     private PasswordField passwordField;
 
-    private final UserService userService = new UserService(new UserRepository());
+    private final UserService userService = AppContext.getUserService();
     @FXML
     private void onRegister(){
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if(userService.register(username,password)){
-            System.out.println("Sikeres regisztráció!");
-        }else{
-            System.out.println("Ez a felhasználónév már foglalt!");
+        if (username.isEmpty() || password.isEmpty()) {
+            showAlert("Minden mezőt ki kell tölteni!");
+            return;
+        }
+        if (password.length() < 6) {
+            showAlert("A jelszónak legalább 6 karakter hosszúnak kell lennie!");
+            return;
+        }
+
+        if(userService.register(username, password)){
+            showAlert("Sikeres regisztráció!");
+            onBack();
+        } else {
+            showAlert("Ez a felhasználónév már foglalt!");
         }
     }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Regisztráció");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     @FXML
     private void onBack(){
         try{

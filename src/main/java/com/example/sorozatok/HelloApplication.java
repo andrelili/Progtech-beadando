@@ -24,7 +24,7 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         //Adatbázis tesztelése:
         //try {
-        //    FilmRepository repo = new FilmRepository();
+        //    FilmRepository repo   = new FilmRepository();
 
         //    Film film = new Film(0, "The Matrix", Status.WATCHED, 4.7, 150);
         //    repo.save(film);

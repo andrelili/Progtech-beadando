@@ -4,10 +4,11 @@ public class RatedFilmDecorator implements FilmComponent{
     private final FilmComponent baseFilm;
     private final double userRating; //A bejelentkezett felhasználó értékelése
 
-    public RatedFilmDecorator(Film basefilm, double userRating) {
-        this.baseFilm = basefilm;
+    public RatedFilmDecorator(FilmComponent baseFilm, double userRating) {
+        this.baseFilm = baseFilm;
         this.userRating = userRating;
     }
+
 
     @Override
     public int getId() {

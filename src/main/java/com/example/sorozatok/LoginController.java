@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -18,25 +19,34 @@ public class LoginController {
 
     @FXML
     private PasswordField passwordField;
-    private final UserService userService = new UserService(new UserRepository());
+    private final UserService userService = AppContext.getUserService();
+
 
     @FXML
-    private void onLogin(){
+    private void onLogin() {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/sorozatok/main-view.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage stage = (Stage) usernameField.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Főoldal");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace(); // ← ez megmutatja, mi a hiba
+        if (userService.login(username, password)) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/sorozatok/main-view.fxml"));
+                Parent root = fxmlLoader.load();
+                Stage stage = (Stage) usernameField.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Főoldal");
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Bejelentkezés sikertelen");
+            alert.setHeaderText(null);
+            alert.setContentText("Hibás felhasználónév vagy jelszó!");
+            alert.showAndWait();
         }
-
     }
+
     @FXML
     private void onRegister(){
        try{

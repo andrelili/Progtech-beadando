@@ -1,5 +1,9 @@
 package com.example.sorozatok;
 
+import com.example.sorozatok.model.Film;
+import com.example.sorozatok.model.Status;
+import com.example.sorozatok.repository.FilmRepository;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -9,56 +13,68 @@ public class MovieFormController {
     @FXML
     private TextField titleField;
     @FXML
-    private TextField yearField;
+    private TextField ratingField;
     @FXML
-    private ComboBox<String> genreComboBox;
+    private ComboBox<Status> genreComboBox;
 
-    private Movie movieToEdit;
+    private Film filmToEdit;
     private boolean isEditMode = false;
 
     @FXML
     public void initialize() {
-        genreComboBox.getItems().addAll("Akció", "Dráma", "Vígjáték", "Sci-fi", "Animáció", "Horror");
+        genreComboBox.setItems(FXCollections.observableArrayList(Status.values()));
+
     }
 
-    public void setMovie(Movie movie) {
-        this.movieToEdit = movie;
+    public void setMovie(Film film) {
+        this.filmToEdit = film;
         this.isEditMode = true;
 
-        titleField.setText(movie.getTitle());
-        yearField.setText(String.valueOf(movie.getYear()));
-        genreComboBox.setValue(movie.getGenre());
+        titleField.setText(film.getTitle());
+        ratingField.setText(String.valueOf(film.getAverageRating()));
+        genreComboBox.setValue(film.getStatus());
     }
 
     @FXML
     private void onSave() {
         String title = titleField.getText();
-        String yearText = yearField.getText();
-        String genre = genreComboBox.getValue();
+        String ratingText = ratingField.getText();
+        Status status = genreComboBox.getValue();
 
-        if (title.isEmpty() || yearText.isEmpty() || genre == null) {
+
+
+        if (title.isEmpty() || ratingText.isEmpty() || status == null) {
             showAlert("Minden mező kitöltése kötelező!");
             return;
         }
 
-        int year;
+        double rating;
         try {
-            year = Integer.parseInt(yearText);
+            rating = Double.parseDouble(ratingText);
         } catch (NumberFormatException e) {
-            showAlert("Az évnek számnak kell lennie!");
+            showAlert("Az értékelésnek számnak kell lennie!");
             return;
         }
 
-        if (isEditMode) {
-            movieToEdit.setTitle(title);
-            movieToEdit.setYear(year);
-            movieToEdit.setGenre(genre);
-        } else {
-            Movie newMovie = new Movie(title, year, genre);
-            MainController.addMovie(newMovie); // statikus metódus a listához adáshoz
-        }
+        try {
+            FilmRepository repo = new FilmRepository();
 
-        closeWindow();
+            if (isEditMode) {
+                filmToEdit.setTitle(title);
+                filmToEdit.setStatus(status);
+                filmToEdit.setAverageRating(rating);
+                repo.update(filmToEdit);
+            } else {
+                Film newFilm = new Film(title, status, rating, 1);
+                repo.save(newFilm);
+                MainController.addMovie(newFilm);
+            }
+
+            closeWindow();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Hiba történt mentés közben.");
+        }
     }
 
     @FXML
