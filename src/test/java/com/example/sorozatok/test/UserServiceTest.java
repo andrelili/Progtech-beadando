@@ -1,6 +1,7 @@
 package com.example.sorozatok.test;
 
 import com.example.sorozatok.repository.IUserRepository;
+import com.example.sorozatok.repository.MockUserRepository;
 import com.example.sorozatok.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,6 @@ public class UserServiceTest {
     public void setup() {
         repo = new MockUserRepository();
         service = new UserService(repo);
-        // Clear the repository before each test to ensure a clean state
         repo.clear();
     }
 
