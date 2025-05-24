@@ -42,16 +42,14 @@ public class RatedFilmDecorator implements FilmComponent{
     }
 
     public void updateFilmRating() {
-        if (!(baseFilm instanceof Film)) {
+        if (baseFilm instanceof Film film) {
+            double totalPoints = film.getAverageRating() * film.getRatingCount();
+            int newCount = film.getRatingCount() + 1;
+            double newAverage = (totalPoints + userRating) / newCount;
+            film.setAverageRating(newAverage);
+            film.setRatingCount(newCount);
+        } else {
             throw new IllegalStateException("Only base Film instances can be updated!");
         }
-
-        Film film = (Film) baseFilm;
-        double currentTotal = film.getAverageRating() * film.getRatingCount(); // összes eddigi értékelés
-        int newCount = film.getRatingCount() + 1;
-        double newAverage = (currentTotal + userRating) / newCount;
-
-        film.setAverageRating(newAverage);
-        film.setRatingCount(newCount);
     }
 }

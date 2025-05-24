@@ -1,7 +1,7 @@
 package com.example.sorozatok.service;
 
 import com.example.sorozatok.model.User;
-import com.example.sorozatok.repository.UserRepository;
+import com.example.sorozatok.repository.IUserRepository;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -11,9 +11,9 @@ import java.util.Optional;
 
 
 public class UserService {
-    private final UserRepository repo;
+    private final IUserRepository repo;
 
-    public UserService(UserRepository repo) {
+    public UserService(IUserRepository repo) {
         this.repo = repo;
     }
 

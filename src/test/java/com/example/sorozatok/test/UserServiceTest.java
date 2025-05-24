@@ -1,6 +1,6 @@
 package com.example.sorozatok.test;
 
-import com.example.sorozatok.repository.UserRepository;
+import com.example.sorozatok.repository.IUserRepository;
 import com.example.sorozatok.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,12 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserServiceTest {
     private UserService service;
-    private UserRepository repo;
+    private MockUserRepository repo;
 
     @BeforeEach
     public void setup() {
-        repo = new UserRepository();
+        repo = new MockUserRepository();
         service = new UserService(repo);
+        // Clear the repository before each test to ensure a clean state
+        repo.clear();
     }
 
     @Test
@@ -40,4 +42,3 @@ public class UserServiceTest {
         assertFalse(service.login("user", "wrongpass"));
     }
 }
-

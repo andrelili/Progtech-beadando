@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-public class UserRepository {
+public class UserRepository implements IUserRepository{
     public boolean save(User user) {
         String sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)";
 
