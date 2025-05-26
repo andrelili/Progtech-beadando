@@ -3,6 +3,10 @@ package com.example.sorozatok;
 import com.example.sorozatok.model.Film;
 import com.example.sorozatok.model.Status;
 import com.example.sorozatok.model.Genre;
+import com.example.sorozatok.strategy.SortByRating;
+import com.example.sorozatok.strategy.SortByTitle;
+import com.example.sorozatok.strategy.SortByYear;
+import com.example.sorozatok.strategy.SortStrategy;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import com.example.sorozatok.repository.FilmRepository;
@@ -17,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainController {
@@ -38,6 +43,16 @@ public class MainController {
 
     private final ObservableList<Film> movieList = FXCollections.observableArrayList();
     private static MainController instance;
+    private SortStrategy sortStrategy;
+    public void setSortStrategy(SortStrategy sortStrategy) {
+        this.sortStrategy = sortStrategy;
+    }
+    private void sortMovies() {
+        if (sortStrategy != null) {
+            movieList.setAll(sortStrategy.sort(new ArrayList<>(movieList)));
+        }
+    }
+    private boolean ascendingOrder = true;
 
     public static void addMovie(Film film) {
         if (instance != null) {
@@ -153,5 +168,23 @@ public class MainController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    @FXML
+    private void onSortByYear() {
+        setSortStrategy(new SortByYear(ascendingOrder));
+        sortMovies();
+        ascendingOrder = !ascendingOrder;
+    }
+    @FXML
+    private void onSortByTitle() {
+        setSortStrategy(new SortByTitle(ascendingOrder));
+        sortMovies();
+        ascendingOrder = !ascendingOrder;
+    }
+    @FXML
+    private void onSortByAvarageRating(){
+        setSortStrategy(new SortByRating(ascendingOrder));
+        sortMovies();
+        ascendingOrder = !ascendingOrder;
     }
 }

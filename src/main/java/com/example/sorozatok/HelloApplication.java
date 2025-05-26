@@ -14,10 +14,10 @@ import java.sql.SQLException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainController.class.getResource("login-view.fxml")); //ha tesztelni akarod akkor a login-,main-, stb használd
+        FXMLLoader fxmlLoader = new FXMLLoader(MainController.class.getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1024, 800);
-        stage.setTitle("Bejelentkezés"); //Használjátok:felhaszn: admin, jelszó: 1234, vagy teszt, jelszó: jelszo
-        stage.setScene(scene); //de a regisztráció is működik.
+        stage.setTitle("Bejelentkezés");
+        stage.setScene(scene);
         stage.show();
     }
 

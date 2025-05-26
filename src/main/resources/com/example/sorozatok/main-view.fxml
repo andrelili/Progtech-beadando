@@ -17,6 +17,9 @@
             <Button text="Törlés" onAction="#onDelete"></Button>
             <TextField fx:id="filterField" promptText="Szűrés cím szerint"></TextField>
             <Button text="Szűrés" onAction="#onFilter"></Button>
+            <Button text="Rendezés év szerint" onAction="#onSortByYear"/>
+            <Button text="Rendezés cím szerint" onAction="#onSortByTitle"/>
+            <Button text="Rendezés értékelés szerint" onAction="#onSortByAvarageRating"></Button>
         </ToolBar>
     </top>
     <center>

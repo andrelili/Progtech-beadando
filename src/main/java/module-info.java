@@ -15,4 +15,6 @@ module com.example.sorozatok {
     opens com.example.sorozatok to javafx.fxml;
     exports com.example.sorozatok;
     exports com.example.sorozatok.model;
+    exports com.example.sorozatok.strategy;
+    opens com.example.sorozatok.strategy to javafx.fxml;
 }
