@@ -12,7 +12,7 @@ public class PasswordUtil {
             byte[] hashed = md.digest(password.getBytes(StandardCharsets.UTF_8));
             return Base64.getEncoder().encodeToString(hashed);
         } catch (NoSuchAlgorithmException e) {
-
+            LoggerUtil.error("Error hashing password... \n\t - " + e.getMessage());
         }
         return password;
     }

@@ -8,14 +8,11 @@ public class MainController implements Observer {
 
     public MainController(MovieModel movieModel) {
         this.movieModel = movieModel;
-        movieModel.addObserver(this); // FELIRATKOZÁS
+        movieModel.addObserver(this);
     }
 
     @Override
     public void onMovieListChanged() {
-        // UI vagy logika frissítése
-        System.out.println("A film lista megváltozott!"); // vagy frissítsd a listanézetet
+        System.out.println("A film lista megváltozott!");
     }
-
-    // további metódusok...
 }

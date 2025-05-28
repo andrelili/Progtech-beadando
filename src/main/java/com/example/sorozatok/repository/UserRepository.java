@@ -2,6 +2,7 @@ package com.example.sorozatok.repository;
 
 import com.example.sorozatok.model.User;
 import com.example.sorozatok.database.DatabaseManager;
+import com.example.sorozatok.utils.LoggerUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,12 +18,15 @@ public class UserRepository {
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPasswordHash());
             stmt.executeUpdate();
+            LoggerUtil.info("User saved");
             return true;
 
         } catch (SQLIntegrityConstraintViolationException e) {
+            LoggerUtil.error("Error saving user... Username already exists");
             // felhasználónév már létezik
             return false;
         } catch (SQLException e) {
+            LoggerUtil.error("Error saving user... ");
             e.printStackTrace();
             return false;
         }
@@ -40,12 +44,15 @@ public class UserRepository {
             if (rs.next()) {
                 String uname = rs.getString("username");
                 String hash = rs.getString("password_hash");
+                LoggerUtil.info("Username found: " + uname);
                 return Optional.of(new User(uname, hash));
             } else {
+                LoggerUtil.error("Username not found \n\t - " + username);
                 return Optional.empty();
             }
 
         } catch (SQLException e) {
+            LoggerUtil.error("Error fetching user...\n\t - " + e.getMessage());
             e.printStackTrace();
             return Optional.empty();
         }

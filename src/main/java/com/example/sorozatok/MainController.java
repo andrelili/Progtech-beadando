@@ -3,6 +3,7 @@ package com.example.sorozatok;
 import com.example.sorozatok.model.Film;
 import com.example.sorozatok.model.Status;
 import com.example.sorozatok.model.Genre;
+import com.example.sorozatok.utils.LoggerUtil;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import com.example.sorozatok.repository.FilmRepository;
@@ -42,7 +43,9 @@ public class MainController {
     public static void addMovie(Film film) {
         if (instance != null) {
             instance.movieList.add(film);
+            LoggerUtil.info("Successfully added movie \n\t - " + film.getTitle());
         }
+
     }
 
     @FXML
@@ -57,6 +60,7 @@ public class MainController {
 
         movieTable.setItems(movieList);
         loadFilmsFromDatabase();
+        LoggerUtil.info("Successfully initialize");
     }
 
     private void loadFilmsFromDatabase() {
@@ -64,7 +68,9 @@ public class MainController {
         try {
             List<Film> films = repo.findAll();
             movieList.setAll(films);
+            LoggerUtil.info("Successfully loaded " + films.size() + " films");
         } catch (SQLException e) {
+            LoggerUtil.error("Error loading films");
             e.printStackTrace();
         }
     }
@@ -82,8 +88,10 @@ public class MainController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
+            LoggerUtil.info("Successfully add movie");
             movieTable.refresh();
         } catch (Exception e) {
+            LoggerUtil.error("Error adding movie");
             e.printStackTrace();
         }
     }
@@ -95,7 +103,9 @@ public class MainController {
             movieList.remove(selected);
             try {
                 new FilmRepository().delete(selected.getId());
+                LoggerUtil.info("Successfully deleted movie \n\t - " + selected.getTitle());
             } catch (SQLException e) {
+                LoggerUtil.error("Error deleting movie \n\t - " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -125,6 +135,7 @@ public class MainController {
         Film selectedFilm = movieTable.getSelectionModel().getSelectedItem();
         if (selectedFilm == null) {
             showAlert("Nincs kiválasztva film a szerkesztéshez.");
+            LoggerUtil.warning("No selected film found");
             return;
         }
 
@@ -141,8 +152,11 @@ public class MainController {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
+            LoggerUtil.info("Successfully edited movie \n\t - " + selectedFilm.getTitle());
+
             movieTable.refresh();
         } catch (Exception e) {
+            LoggerUtil.error("Error editing movie \n\t - " + e.getMessage());
             e.printStackTrace();
         }
     }

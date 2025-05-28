@@ -3,11 +3,13 @@ import com.example.sorozatok.database.DatabaseManager;
 import com.example.sorozatok.model.Film;
 import com.example.sorozatok.model.Genre;
 import com.example.sorozatok.model.Status;
+import com.example.sorozatok.utils.LoggerUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 public class FilmRepository {
     public void save(Film film) throws SQLException {
@@ -26,6 +28,10 @@ public class FilmRepository {
             if (generatedKeys.next()) {
                 film.setId(generatedKeys.getInt(1));
             }
+            LoggerUtil.info("Film successfully saved!");
+        }
+        catch (SQLException e) {
+            LoggerUtil.error("Error saving film... \n\t - " + e.getMessage());
         }
     }
 
@@ -38,6 +44,10 @@ public class FilmRepository {
             if (rs.next()) {
                 return Optional.of(mapRow(rs));
             }
+            LoggerUtil.info("Film requested with id!");
+        }
+        catch (SQLException e) {
+            LoggerUtil.error("Error fetching film... \n\t - " + e.getMessage());
         }
         return Optional.empty();
     }
@@ -51,11 +61,16 @@ public class FilmRepository {
             while (rs.next()) {
                 films.add(mapRow(rs));
             }
+            LoggerUtil.info("Films found!");
+        }
+        catch (SQLException e) {
+            LoggerUtil.error("Error fetching films... \n\t - " + e.getMessage());
         }
         return films;
     }
 
     private Film mapRow(ResultSet rs) throws SQLException {
+        LoggerUtil.info("Film found!");
         return new Film(
                 rs.getInt("id"),
                 rs.getString("title"),
@@ -79,7 +94,9 @@ public class FilmRepository {
             stmt.setInt(6, film.getYear());
             stmt.setInt(7, film.getId());
             stmt.executeUpdate();
+            LoggerUtil.info("Film successfully updated!");
         }catch (SQLException e) {
+            LoggerUtil.error("Error updating film...\n\t - " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -90,6 +107,10 @@ public class FilmRepository {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
+            LoggerUtil.info("Film successfully deleted!");
+        }
+        catch (SQLException e) {
+            LoggerUtil.error("Error deleting film...\n\t - " + e.getMessage());
         }
     }
 }

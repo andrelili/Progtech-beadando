@@ -3,6 +3,7 @@ package com.example.sorozatok;
 import com.example.sorozatok.model.User;
 import com.example.sorozatok.service.UserService;
 import com.example.sorozatok.repository.UserRepository;
+import com.example.sorozatok.utils.LoggerUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,18 +33,22 @@ public class RegisterController {
 
         if (username.isEmpty() || password.isEmpty()) {
             showAlert("Minden mezőt ki kell tölteni!");
+            LoggerUtil.error("All fields must be filled!");
             return;
         }
         if (password.length() < 6) {
             showAlert("A jelszónak legalább 6 karakter hosszúnak kell lennie!");
+            LoggerUtil.error("Password must be at least 6 characters!");
             return;
         }
 
         if(userService.register(username, password)){
             showAlert("Sikeres regisztráció!");
+            LoggerUtil.info("Successfully registered!");
             onBack();
         } else {
             showAlert("Ez a felhasználónév már foglalt!");
+            LoggerUtil.warning("THis username is already taken!" + username);
         }
     }
 

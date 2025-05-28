@@ -2,6 +2,7 @@ package com.example.sorozatok;
 
 import com.example.sorozatok.service.UserService;
 import com.example.sorozatok.repository.UserRepository;
+import com.example.sorozatok.utils.LoggerUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -36,7 +37,9 @@ public class LoginController {
                 stage.setScene(scene);
                 stage.setTitle("Főoldal");
                 stage.show();
+                LoggerUtil.info("Successfully logged in user \n\t - " + username);
             } catch (IOException e) {
+                LoggerUtil.error("Error logging in user... \n\t - " + e.getMessage());
                 e.printStackTrace();
             }
         } else {
@@ -45,6 +48,8 @@ public class LoginController {
             alert.setHeaderText(null);
             alert.setContentText("Hibás felhasználónév vagy jelszó!");
             alert.showAndWait();
+
+            LoggerUtil.warning("Username or password is incorrect");
         }
     }
 
@@ -58,7 +63,10 @@ public class LoginController {
             stage.setScene(scene);
             stage.setTitle("Regisztráció");
             stage.show();
+
+            LoggerUtil.info("Successfully registered user \n\t - " + usernameField.getText());
         } catch(IOException e){
+            LoggerUtil.error("Error registering user... \n\t - " + e.getMessage());
             e.printStackTrace();
         }
     }
