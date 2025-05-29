@@ -2,9 +2,9 @@ package com.example.sorozatok.test;
 
 import com.example.sorozatok.model.*;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 public class RatedFilmDecoratorTest {
     @Test

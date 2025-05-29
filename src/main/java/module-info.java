@@ -9,11 +9,12 @@ module com.example.sorozatok {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
-    requires com.almasb.fxgl.all;
     requires java.sql;
     requires java.desktop;
-    requires org.junit.jupiter.api;
 
     opens com.example.sorozatok to javafx.fxml;
     exports com.example.sorozatok;
+    exports com.example.sorozatok.model;
+    exports com.example.sorozatok.strategy;
+    opens com.example.sorozatok.strategy to javafx.fxml;
 }

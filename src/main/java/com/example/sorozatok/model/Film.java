@@ -1,10 +1,9 @@
 package com.example.sorozatok.model;
 
-import eu.hansolo.fx.countries.PropertyManager;
 import javafx.beans.property.*;
 
 
-public class Film {
+public class Film implements FilmComponent{
     private final IntegerProperty id = new SimpleIntegerProperty();
     private final StringProperty title = new SimpleStringProperty();
     private final ObjectProperty<Genre> genre = new SimpleObjectProperty<>();
