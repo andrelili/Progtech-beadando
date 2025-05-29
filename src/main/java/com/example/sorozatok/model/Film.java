@@ -29,15 +29,9 @@ public class Film implements FilmComponent{
 
 
     // Property metódusok
-    public IntegerProperty idProperty() { return id; }
     public StringProperty titleProperty() { return title; }
     public ObjectProperty<Status> statusProperty() { return status; }
     public ObjectProperty<Genre> genreProperty() { return genre; }
-    public DoubleProperty averageRatingProperty() { return averageRating; }
-    public IntegerProperty ratingCountProperty() { return ratingCount; }
-    public IntegerProperty yearProperty() { return year; }
-
-
 
     // Getterek
     public int getId() { return id.get(); }

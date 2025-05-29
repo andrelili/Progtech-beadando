@@ -67,9 +67,8 @@ public class MainController {
         movieManager = new MovieManager(new FilmRepository());
         movieList.setAll(movieManager.loadFilms());
         movieTable.setItems(movieList);
-        loadFilmsFromDatabase();
     }
-
+/*
     private void loadFilmsFromDatabase() {
         FilmRepository repo = new FilmRepository();
         try {
@@ -79,7 +78,7 @@ public class MainController {
             e.printStackTrace();
         }
     }
-
+*/
     @FXML
     private void onAdd() {
         try {

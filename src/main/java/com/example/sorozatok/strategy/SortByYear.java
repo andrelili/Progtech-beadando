@@ -17,7 +17,7 @@ public class SortByYear implements SortStrategy {
     public List<Film> sort(List<Film> films) {
         Comparator<Film> comparator = Comparator.comparing(Film::getYear);
         return films.stream()
-                .sorted(ascending ? comparator : comparator.reversed()) // Növekvő vagy csökkenő
+                .sorted(ascending ? comparator : comparator.reversed())
                 .collect(Collectors.toList());
     }
 }

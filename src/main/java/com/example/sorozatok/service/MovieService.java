@@ -29,20 +29,11 @@ public class MovieService {
     }
 
     private void validateFilm(String title, double rating, int year, Status status, Genre genre) throws Exception {
-        if (title == null || title.isEmpty()) {
-            throw new Exception("Title cannot be empty");
-        }
         if (rating < 0 || rating > 10) {
             throw new Exception("Rating must be between 0 and 10");
         }
         if (year < 1888 || year > 2100) {
             throw new Exception("Year must be a valid year");
-        }
-        if (status == null) {
-            throw new Exception("Status must be selected");
-        }
-        if (genre == null) {
-            throw new Exception("Genre must be selected");
         }
     }
 }

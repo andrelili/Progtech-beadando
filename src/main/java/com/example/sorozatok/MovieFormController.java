@@ -30,8 +30,6 @@ public class MovieFormController {
     private boolean isEditMode = false;
     private final MovieService movieService = new MovieService(new FilmRepository());
 
-
-
     @FXML
     public void initialize() {
         statusComboBox.setItems(FXCollections.observableArrayList(Status.values()));
