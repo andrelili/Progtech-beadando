@@ -3,9 +3,12 @@ import com.example.sorozatok.model.Film;
 import com.example.sorozatok.observer.Observable;
 import com.example.sorozatok.observer.Observer;
 import com.example.sorozatok.repository.FilmRepository;
+import com.example.sorozatok.strategy.SortStrategy;
+import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,4 +55,23 @@ public class MovieManager extends Observable<Observer> {
         }
         return filtered;
     }
+    public List<Film> sortByYear(List<Film> films) {
+        films.sort(Comparator.comparingInt(Film::getYear));
+        return films;
+    }
+    public List<Film> sortByTitle(List<Film> films) {
+        films.sort(Comparator.comparing(f -> f.getTitle().toLowerCase()));
+        return films;
+    }
+
+    public List<Film> sortByAverageRating(List<Film> films) {
+        films.sort((f1, f2) -> Double.compare(f2.getAverageRating(), f1.getAverageRating()));
+        return films;
+    }
+
+
+    public List<Film> sort(List<Film> films, SortStrategy strategy) {
+        return strategy.sort(new ArrayList<>(films));
+    }
+
 }
