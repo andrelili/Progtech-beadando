@@ -3,18 +3,24 @@ package com.example.sorozatok.session;
 import com.example.sorozatok.model.User;
 
 public class SessionManager {
-    private static User activeUser;
+    private static SessionManager instance;
+    private User currentUser;
 
-    public static void setActiveUser(User user) {
-        activeUser = user;
+    private SessionManager() {}
+
+    public static SessionManager getInstance() {
+        if (instance == null) {
+            instance = new SessionManager();
+        }
+        return instance;
     }
 
-    public static User getActiveUser() {
-        return activeUser;
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
     }
 
-    public static boolean isLoggedIn() {
-        return activeUser != null;
+    public User getCurrentUser() {
+        return currentUser;
     }
 }
 

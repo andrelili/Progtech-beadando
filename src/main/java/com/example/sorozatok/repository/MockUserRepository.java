@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class MockUserRepository implements IUserRepository {
+public class MockUserRepository extends UserRepository implements IUserRepository {
     private final Map<String, User> users = new HashMap<>();
 
     @Override

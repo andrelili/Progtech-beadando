@@ -1,12 +1,12 @@
-package com.example.sorozatok.observer;
+package com.example.sorozatok.model;
 
-import com.example.sorozatok.Movie;
 import com.example.sorozatok.observer.Observer;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieModel {
-    private List<Movie> movieList = new ArrayList<>();
+public class Observert_Film {
+    private List<Film> movieList = new ArrayList<>();
     private List<Observer> observers = new ArrayList<>();
 
     public void addObserver(Observer observer) {
@@ -23,17 +23,17 @@ public class MovieModel {
         }
     }
 
-    public void addMovie(Movie movie) {
+    public void addMovie(Film movie) {
         movieList.add(movie);
         notifyObservers(); // ÉRTESÍTÉS
     }
 
-    public void removeMovie(Movie movie) {
+    public void removeMovie(Film movie) {
         movieList.remove(movie);
         notifyObservers(); // ÉRTESÍTÉS
     }
 
-    public List<Movie> getAllMovies() {
+    public List<Film> getAllMovies() {
         return movieList;
     }
 
