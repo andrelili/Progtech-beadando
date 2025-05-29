@@ -3,9 +3,10 @@ package com.example.sorozatok;
 import com.example.sorozatok.model.Film;
 import com.example.sorozatok.model.Status;
 import com.example.sorozatok.model.Genre;
+import com.example.sorozatok.repository.FilmRepository;
+import com.example.sorozatok.service.MovieManager;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import com.example.sorozatok.repository.FilmRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,7 +17,7 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainController {
@@ -27,7 +28,7 @@ public class MainController {
     @FXML
     private TableColumn<Film, Integer> yearColumn;
     @FXML
-    private TableColumn<Film, Genre> genreColumn;
+    TableColumn<Film, Genre> genreColumn;
     @FXML
     private TableColumn<Film, Double> ratingColumn;
     @FXML
@@ -38,6 +39,7 @@ public class MainController {
 
     private final ObservableList<Film> movieList = FXCollections.observableArrayList();
     private static MainController instance;
+    private final MovieManager movieManager = new MovieManager(new FilmRepository());
 
     public static void addMovie(Film film) {
         if (instance != null) {
@@ -60,13 +62,8 @@ public class MainController {
     }
 
     private void loadFilmsFromDatabase() {
-        FilmRepository repo = new FilmRepository();
-        try {
-            List<Film> films = repo.findAll();
-            movieList.setAll(films);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        List<Film> films = movieManager.loadFilms();
+        movieList.setAll(films);
     }
 
     @FXML
@@ -93,31 +90,15 @@ public class MainController {
         Film selected = movieTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             movieList.remove(selected);
-            try {
-                new FilmRepository().delete(selected.getId());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            movieManager.deleteFilm(selected.getId());
         }
     }
 
     @FXML
     private void onFilter() {
-        String filter = filterField.getText().toLowerCase();
-
-        if (filter.isEmpty()) {
-            movieTable.setItems(movieList);
-            return;
-        }
-
-        ObservableList<Film> filteredList = FXCollections.observableArrayList();
-        for (Film film : movieList) {
-            if (film.getTitle().toLowerCase().contains(filter)) {
-                filteredList.add(film);
-            }
-        }
-
-        movieTable.setItems(filteredList);
+        String filter = filterField.getText();
+        List<Film> filtered = movieManager.filterFilms(new ArrayList<>(movieList), filter);
+        movieTable.setItems(FXCollections.observableArrayList(filtered));
     }
 
     @FXML

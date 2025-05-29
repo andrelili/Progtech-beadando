@@ -4,7 +4,6 @@ import com.example.sorozatok.model.Film;
 import com.example.sorozatok.model.Genre;
 import com.example.sorozatok.model.Status;
 import com.example.sorozatok.repository.FilmRepository;
-import com.example.sorozatok.utils.LoggerUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -57,7 +56,6 @@ public class MovieFormController {
 
         if (title.isEmpty() || ratingText.isEmpty() || yearText.isEmpty() || status == null || genre == null) {
             showAlert("Minden mező kitöltése kötelező!");
-            LoggerUtil.error("All fields must be filled!");
             return;
         }
 
@@ -65,19 +63,15 @@ public class MovieFormController {
         int year;
         try {
             rating = Double.parseDouble(ratingText);
-            LoggerUtil.info("Rating is " + rating);
         } catch (NumberFormatException e) {
             showAlert("Az értékelésnek számnak kell lennie!");
-            LoggerUtil.error("The Rating must be a number!");
             return;
         }
 
         try {
             year = Integer.parseInt(yearText);
-            LoggerUtil.info("Year is " + year);
         } catch (NumberFormatException e) {
             showAlert("Az évnek számnak kell lennie!");
-            LoggerUtil.error("The year must be a number!");
             return;
         }
 
@@ -96,11 +90,10 @@ public class MovieFormController {
                 repo.save(newFilm);
                 MainController.addMovie(newFilm);
             }
-            LoggerUtil.info("Successfully saved the film");
+
             closeWindow();
         } catch (Exception e) {
             e.printStackTrace();
-            LoggerUtil.error(e.getMessage());
             showAlert("Hiba történt mentés közben.");
         }
     }
