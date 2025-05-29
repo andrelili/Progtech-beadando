@@ -46,7 +46,9 @@ public class MainController {
     private final ObservableList<Film> movieList = FXCollections.observableArrayList();
     private static MainController instance;
     private MovieManager movieManager;
-    boolean sortByYearAscending = true;
+    private boolean sortByYearAscending = true;
+    private boolean sortByTitleAscending = true;
+    private boolean sortByRatingAscending = true;
     public static void addMovie(Film film) {
         if (instance != null) {
             instance.movieList.add(film);
@@ -175,19 +177,19 @@ public class MainController {
 
     @FXML
     private void onSortByTitle() {
-        SortStrategy strategy = new SortByTitle(sortByYearAscending);
+        SortStrategy strategy = new SortByTitle(sortByTitleAscending);
         List<Film> sorted = movieManager.sort(movieList,strategy);
         movieList.setAll(sorted);
-        sortByYearAscending = !sortByYearAscending;
+        sortByTitleAscending = !sortByTitleAscending;
         movieTable.refresh();
     }
 
     @FXML
     private void onSortByAvarageRating() {
-        SortStrategy strategy = new SortByRating(sortByYearAscending);
+        SortStrategy strategy = new SortByRating(sortByRatingAscending);
         List<Film> sorted = movieManager.sort(movieList,strategy);
         movieList.setAll(sorted);
-        sortByYearAscending = !sortByYearAscending;
+        sortByRatingAscending = !sortByRatingAscending;
         movieTable.refresh();
     }
 

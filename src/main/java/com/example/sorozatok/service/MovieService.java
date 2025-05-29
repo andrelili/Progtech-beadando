@@ -32,8 +32,8 @@ public class MovieService {
         if (title == null || title.isEmpty()) {
             throw new Exception("Title cannot be empty");
         }
-        if (rating < 0 || rating > 5) {
-            throw new Exception("Rating must be between 0 and 5");
+        if (rating < 0 || rating > 10) {
+            throw new Exception("Rating must be between 0 and 10");
         }
         if (year < 1888 || year > 2100) {
             throw new Exception("Year must be a valid year");

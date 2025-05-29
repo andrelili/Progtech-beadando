@@ -4,6 +4,7 @@ import com.example.sorozatok.model.Film;
 import com.example.sorozatok.model.Genre;
 import com.example.sorozatok.model.Status;
 import com.example.sorozatok.repository.FilmRepository;
+import com.example.sorozatok.service.MovieService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -27,6 +28,9 @@ public class MovieFormController {
 
     private Film filmToEdit;
     private boolean isEditMode = false;
+    private final MovieService movieService = new MovieService(new FilmRepository());
+
+
 
     @FXML
     public void initialize() {
@@ -76,27 +80,19 @@ public class MovieFormController {
         }
 
         try {
-            FilmRepository repo = new FilmRepository();
-
             if (isEditMode) {
-                filmToEdit.setTitle(title);
-                filmToEdit.setStatus(status);
-                filmToEdit.setGenre(genre);
-                filmToEdit.setAverageRating(rating);
-                filmToEdit.setYear(year);
-                repo.update(filmToEdit);
+                movieService.updateFilm(filmToEdit, title, rating, year, status, genre);
             } else {
-                Film newFilm = new Film(title, status, genre, rating, 1, year);
-                repo.save(newFilm);
-                MainController.addMovie(newFilm);
+                movieService.saveFilm(title, rating, year, status, genre);
+                MainController.addMovie(new Film(title, status, genre, rating, 1, year));
             }
 
             closeWindow();
         } catch (Exception e) {
-            e.printStackTrace();
-            showAlert("Hiba történt mentés közben.");
+            showAlert(e.getMessage());
         }
     }
+
 
 
     @FXML

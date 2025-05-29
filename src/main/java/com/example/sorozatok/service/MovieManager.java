@@ -55,21 +55,6 @@ public class MovieManager extends Observable<Observer> {
         }
         return filtered;
     }
-    public List<Film> sortByYear(List<Film> films) {
-        films.sort(Comparator.comparingInt(Film::getYear));
-        return films;
-    }
-    public List<Film> sortByTitle(List<Film> films) {
-        films.sort(Comparator.comparing(f -> f.getTitle().toLowerCase()));
-        return films;
-    }
-
-    public List<Film> sortByAverageRating(List<Film> films) {
-        films.sort((f1, f2) -> Double.compare(f2.getAverageRating(), f1.getAverageRating()));
-        return films;
-    }
-
-
     public List<Film> sort(List<Film> films, SortStrategy strategy) {
         return strategy.sort(new ArrayList<>(films));
     }
