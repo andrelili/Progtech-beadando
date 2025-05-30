@@ -1,6 +1,7 @@
 package com.example.sorozatok;
 
 import com.example.sorozatok.model.User;
+import com.example.sorozatok.service.IUserService;
 import com.example.sorozatok.service.UserService;
 import com.example.sorozatok.repository.UserRepository;
 import com.example.sorozatok.utils.LoggerUtil;
@@ -23,7 +24,7 @@ public class RegisterController {
     @FXML
     private PasswordField passwordField;
 
-    private final UserService userService = AppContext.getUserService();
+    private final IUserService userService = AppContext.getUserService();
     @FXML
     private void onRegister(){
         String username = usernameField.getText();

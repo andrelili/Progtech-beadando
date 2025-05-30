@@ -1,5 +1,7 @@
 package com.example.sorozatok;
 
+import com.example.sorozatok.repository.IUserRepository;
+import com.example.sorozatok.service.IUserService;
 import com.example.sorozatok.service.UserService;
 import com.example.sorozatok.repository.UserRepository;
 import com.example.sorozatok.utils.LoggerUtil;
@@ -20,7 +22,7 @@ public class LoginController {
 
     @FXML
     private PasswordField passwordField;
-    private final UserService userService = AppContext.getUserService();
+    private final IUserService userService = AppContext.getUserService();
 
 
     @FXML

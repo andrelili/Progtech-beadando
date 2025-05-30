@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 
 
-public class UserService {
+public class UserService implements IUserService{
     private final UserRepository repo;
 
     public UserService(UserRepository repo) {
