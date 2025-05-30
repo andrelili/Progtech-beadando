@@ -41,20 +41,6 @@ public class MovieManager extends Observable<Observer> {
 
 
     }
-
-    public List<Film> filterFilms(List<Film> films, String filterText) {
-        if (filterText == null || filterText.isEmpty()) {
-            return films;
-        }
-
-        List<Film> filtered = new ArrayList<>();
-        for (Film film : films) {
-            if (film.getTitle().toLowerCase().contains(filterText.toLowerCase())) {
-                filtered.add(film);
-            }
-        }
-        return filtered;
-    }
     public List<Film> sort(List<Film> films, SortStrategy strategy) {
         return strategy.sort(new ArrayList<>(films));
     }
